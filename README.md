@@ -1,7 +1,9 @@
 # Nextperm
 
-Generates permutations when needed using non-recursive algorithm found
+Generates permutations when needed using a non-recursive algorithm found
 on [wikipedia](https://en.wikipedia.org/wiki/Heap's_algorithm)
+
+In C++ there is the `std::next_permutation`.
 
 ## Example
 
