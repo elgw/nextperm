@@ -9,18 +9,36 @@ void perm_swap(perm_t * P, int x, int y)
   P->A[y] = t;
 }
 
-perm_t perm_init(int N)
+perm_t * perm_init(int N)
 {
-  perm_t P;
-  P.C = malloc(sizeof(int)*N); // swap state variables
-  P.A = malloc(sizeof(int)*N); // integers to be permuted. 
+  perm_t * P = malloc(sizeof(perm_t));
+  if(P==NULL)
+  {
+    return NULL;
+  }
+
+  P->C = malloc(sizeof(int)*N); // swap state variables
+  if((P->C) == NULL)
+  {
+    free(P);
+    return NULL;
+  }
+
+  P->A = malloc(sizeof(int)*N); // integers to be permuted. 
+  if(P->A == NULL)
+  {
+    free(P->C);
+    free(P);
+    return NULL;
+  }
+
   for(int kk = 0; kk<N; kk++)
   {
-    P.C[kk] = 0;
-    P.A[kk] = kk+1;
+    P->C[kk] = 0;
+    P->A[kk] = kk+1;
   }
-  P.i = 0;
-  P.N = N;
+  P->i = 0;
+  P->N = N;
   return P;
 }
 
@@ -60,6 +78,7 @@ void perm_free(perm_t * P)
 {
   free(P->C);
   free(P->A);
+  free(P);
 }
 
 void perm_show(perm_t * P)
