@@ -12,9 +12,7 @@ See `nextterm_test.c`.
 ## Example
 
 ```
-$ make
-gcc --std=c99 -Wall -c nextperm.c -o nextperm.o
-gcc --std=c99 -Wall nextperm_test.c nextperm.o -o nextperm_test
+$ make all
 $ ./nextperm_test 1
 #001 1 
 $ ./nextperm_test 2
@@ -33,3 +31,23 @@ $ ./nextperm_test 4
 #003 3 1 2 4 
 ...
 ``` 
+
+# Permn
+
+Generate the Nth lexicographical permutation of the integer set 1,2,...n using the [factorial number system](https://en.wikipedia.org/wiki/Factorial_number_system) (factoradic).
+
+## Usage
+See `permn_test.c`.
+
+## Example
+```
+$ ./permn_test 0 7
+Finding permutation 0 of 7 elements
+1 2 3 4 5 6 7 
+$ ./permn_test 1 7
+Finding permutation 1 of 7 elements
+1 2 3 4 5 7 6 
+$ ./permn_test 5039 7
+Finding permutation 5039 of 7 elements
+7 6 5 4 3 2 1
+```

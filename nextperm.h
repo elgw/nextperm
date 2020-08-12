@@ -1,7 +1,13 @@
+#ifndef nextperm_h_
+#define nextperm_h_
+
+#include <stdlib.h>
+#include <stdio.h>
+
 typedef struct {
   int * C;
   int * A; // Permuted integers at current iteration
-  size_t N;
+  size_t N; // Number of digits
   int i;
 } perm_t;
 
@@ -19,7 +25,7 @@ perm_t * perm_init(int N);
 int perm_next(perm_t * P);
 
 /** Free the storage allocated for P
- */
+*/
 void perm_free(perm_t * P);
 
 /** Show the current permutation
@@ -28,5 +34,4 @@ void perm_free(perm_t * P);
  * P->A to get the current permutation */
 void perm_show(perm_t * P);
 
-// For internal use only
-void perm_swap(perm_t * P, int x, int y);
+#endif
