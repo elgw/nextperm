@@ -28,6 +28,8 @@ perm_t * perm_init(uint32_t N);
 /**  Iterate P to the next permutation.
  * Returns 1 on sucess or 0 if all permutations
  * of the set already has been generated
+ *
+ * No calls to free or malloc are used.
  */
 uint32_t perm_next(perm_t * P);
 
@@ -35,10 +37,10 @@ uint32_t perm_next(perm_t * P);
  */
 void perm_free(perm_t * P);
 
-/* Generates the Nth lexicographical permutation of
+/** Generates the Nth lexicographical permutation of
  * the integers 1, 2, ... n
  *
- * Internally it first calculates the factoradic representation of N
+ * The factoradic representation of N is calculated
  * before the permutation is generated and returned.
  *
  * The returned array will have n elements and it is

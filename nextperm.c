@@ -1,7 +1,6 @@
-#include "nextperm.h"
-
 #include <assert.h>
 
+#include "nextperm.h"
 
 typedef uint32_t u32;
 typedef uint64_t u64;
@@ -149,15 +148,6 @@ getpermutation(u64 * L, u64 n)
 u64 *
 lexpermn(u64 N, u64 n)
 {
-    /* Generate the Nth permutation of the integers 1, ..., n
-     *  1. Get the factoradic of N -> F
-     *  2. Get the Lehmer code of F -> L
-     *  3. Generate the permutation from L -> P
-     *  4. Return
-     *
-     *  The returned array will have n elements and it is
-     *  the responsibility of the caller to free it.
-     */
     u64 * F = getfactoradic(N, n);
     u64 * P = getpermutation(F, n);
     free(F);
