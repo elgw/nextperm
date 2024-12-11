@@ -45,42 +45,51 @@ factorial(u64 n)
 
 int main(int argc, char ** argv)
 {
-  u64 N = 4;
-  u64 pnum = 1;
-  if(argc == 2)
-    N = atol(argv[1]);
+    u64 N = 4;
 
-  if(N<1)
-    return 0;
+    if(argc == 2)
+    {
+        N = atol(argv[1]);
+    }
 
-  printf("Showing all permutations for 1, ..., %lu (perm_init, perm_next)\n", N);
+    if(N<1)
+    {
+        printf("Please use at least one digit\n");
+        return EXIT_FAILURE;
+    }
 
-  perm_t * P = perm_init(N);
-  if(P == NULL)
-  {
-    printf("Allocation failed\n");
-    return EXIT_FAILURE;
-  }
+    printf("Using %lu digits (%lu permutations)\n", N, factorial(N));
+    fflush(stdout);
 
+    printf("-> All permutations for 1, ..., %lu (perm_init, perm_next)\n", N);
 
-  print_array32(P->A, P->N);
-  printf(" (0)\n");
-  while(perm_next(P) == 0)
-  {
-      print_array32(P->A, N);
-      printf(" (%lu)\n", pnum++);
-  }
-  perm_free(P);
+    hperm_t * P = hperm_init(N);
+    if(P == NULL)
+    {
+        printf("Allocation failed\n");
+        return EXIT_FAILURE;
+    }
 
-  printf("Showing using lexographic order (lexpermn)\n");
-  u64 nperm = factorial(N);
-  for(u64 pnum = 0; pnum < nperm; pnum++)
-  {
-      u64 * P = lexpermn(pnum, N);
-      print_array64(P, N);
-      printf(" (%lu)\n", pnum);
-      free(P);
-  }
+    u64 n = 0;
+    do
+    {
+        print_array32(P->permutation, N);
+        printf(" (%lu)\n", n++);
+    } while (!hperm_next(P));
 
-  return EXIT_SUCCESS;
+    hperm_free(P);
+
+    printf("\n");
+    printf("-> All permutations for 1, ..., %lu (lexperm)\n", N);
+
+    u64 nperm = factorial(N);
+    for(u64 pnum = 0; pnum < nperm; pnum++)
+    {
+        u64 * P = lexpermn(pnum, N);
+        print_array64(P, N);
+        printf(" (%lu)\n", pnum);
+        free(P);
+    }
+
+    return EXIT_SUCCESS;
 }

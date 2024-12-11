@@ -1,4 +1,5 @@
 #include <assert.h>
+#include <string.h>
 
 #include "nextperm.h"
 
@@ -6,87 +7,90 @@ typedef uint32_t u32;
 typedef uint64_t u64;
 
 static void
-perm_swap(perm_t * P, const u32 x, const u32 y)
+hperm_swap(hperm_t * P, const u32 x, const u32 y)
 {
-    u32 t = P->A[x];
-    P->A[x] = P->A[y];
-    P->A[y] = t;
+    u32 t = P->permutation[x];
+    P->permutation[x] = P->permutation[y];
+    P->permutation[y] = t;
 }
 
-perm_t *
-perm_init(const u32 N)
+hperm_t *
+hperm_init(const u32 n_elements)
 {
-    perm_t * P = calloc(1, sizeof(perm_t));
+    hperm_t * P = calloc(1, sizeof(hperm_t));
     if(P == NULL)
     {
         return NULL;
     }
 
-    P->C = calloc(N, sizeof(u32)); // swap state variables
+    *(u32*)&P->n_elements = n_elements; /* set const value */
+
+    P->C = calloc(n_elements, sizeof(u32)); // swap state variables
     if((P->C) == NULL)
     {
         free(P);
         return NULL;
     }
 
-    P->A = calloc(N, sizeof(u32)); // u32egers to be permuted.
-    if(P->A == NULL)
+    P->permutation = calloc(n_elements, sizeof(u32)); // integers to be permuted
+    if(P->permutation == NULL)
     {
         free(P->C);
         free(P);
         return NULL;
     }
 
-    for(u32 kk = 0; kk<N; kk++)
+    for(u32 kk = 0; kk<n_elements; kk++)
     {
         P->C[kk] = 0;
-        P->A[kk] = kk+1;
+        P->permutation[kk] = kk+1;
     }
-    P->i = 0;
-    P->N = N;
+
+
     return P;
 }
 
 u32
-perm_next(perm_t * P)
+hperm_next(hperm_t * P)
 {
 
+    u64 ii = 0;
     do {
-        if(P->i == P->N)
+        if(ii == P->n_elements)
         {
             return -1;
         }
 
-        if(P->C[P->i] < P->i)
+        if(P->C[ii] < ii)
         {
-            if( (P->i % 2) == 0)
+            if( (ii % 2) == 0)
             { // if even
-                perm_swap(P, 0, P->i);
+                hperm_swap(P, 0, ii);
             }
             else
             {
-                perm_swap(P, P->C[P->i], P->i);
+                hperm_swap(P, P->C[ii], ii);
             }
             // output
-            P->C[P->i]++;
-            P->i = 0;
+            P->C[ii]++;
+            ii = 0;
         }
         else
         {
-            P->C[P->i] = 0;
-            P->i++;
+            P->C[ii] = 0;
+            ii++;
         }
     }
-    while(P->i != 0);
+    while(ii != 0);
 
     return 0;
 }
 
 void
-perm_free(perm_t * P)
+hperm_free(hperm_t * P)
 {
     free(P->C);
-    free(P->A);
+    free(P->permutation);
     free(P);
     P = NULL;
 }

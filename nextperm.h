@@ -12,18 +12,20 @@
 #define NEXTPERM_VERSION_PATCH 0
 
 typedef struct {
-    uint32_t N; // Number of digits
-    uint32_t * A; // N permuted values at current iteration
+    /* Read only: n_elements permuted values at current iteration */
+    uint32_t * permutation;
+    // Number of digits/indexes/integers
+    const uint32_t n_elements;
+    // Internal private buffer
     uint32_t * C;
-    uint32_t i;
-} perm_t;
+} hperm_t;
 
 /** Allocate storage for permutation object,
  * and set the first permutation of the set
  * {1, 2, ..., N} to [1,2,...,N].
  * Returns NULL if the allocation failed.
  * **/
-perm_t * perm_init(uint32_t N);
+hperm_t * hperm_init(uint32_t n_elements);
 
 /**  Iterate P to the next permutation.
  * Returns 1 on sucess or 0 if all permutations
@@ -31,11 +33,11 @@ perm_t * perm_init(uint32_t N);
  *
  * No calls to free or malloc are used.
  */
-uint32_t perm_next(perm_t * P);
+uint32_t hperm_next(hperm_t * P);
 
 /** Free the storage allocated for P
  */
-void perm_free(perm_t * P);
+void hperm_free(hperm_t * P);
 
 /** Generates the Nth lexicographical permutation of
  * the integers 1, 2, ... n
