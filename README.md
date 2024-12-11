@@ -8,7 +8,7 @@ algorithm](https://en.wikipedia.org/wiki/Heap's_algorithm) similar to
 `std::next_permutation` in C++.
 
 - `lexpermn` Generate the Nth lexicographical permutation of the
-  integer set $[1,2,...B] using the [factorial number
+  integer set $[1,2,...N]$ using the [factorial number
   system](https://en.wikipedia.org/wiki/Factorial_number_system)
   (factoradic).
 
