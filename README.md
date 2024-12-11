@@ -18,7 +18,7 @@ For the API documentation see `nextperm.h`.
 
 The basic usage can be seen in `nextterm_test.c`.
 
-``` shell
+```
 $ ./nextperm_test 3
 Showing all permutations for 1, ..., 3 (perm_init, perm_next)
 1 2 3  (0)
