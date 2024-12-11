@@ -29,7 +29,10 @@ For the API documentation see `nextperm.h`.
 
 The basic usage can be seen in `nextterm_test.c`.
 
+The `nextperm_test` binary is just used for testing, example:
 ```
+$ ./nextperm_test 3
+Using 3 digits (6 permutations)
 -> All permutations for 1, ..., 3 (perm_init, perm_next)
 1 2 3  (0)
 2 1 3  (1)
